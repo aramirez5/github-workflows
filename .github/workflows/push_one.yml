@@ -1,7 +1,7 @@
-name: Deploy project in three sequential jobs
+name: Deploy project in one job
 on: push
 jobs:
-  lint:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Pull code
@@ -12,26 +12,10 @@ jobs:
         run: | 
           echo "Linting project..."
           npm run lint
-  tests:
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull code
-        uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
       - name: Execute tests
         run: | 
           echo "Testing project..."
           npm run test
-  deploy:
-    needs: tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull code
-        uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
       - name: Build project
         run: npm run build
       - name: Deploy project
