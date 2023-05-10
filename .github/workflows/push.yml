@@ -1,0 +1,50 @@
+name: Deploy project
+on: push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull code
+        uses: actions/chechout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Execute lint command
+        run: npm run lint
+      - name: Linting project
+        run: echo "Linting project..."
+  tests:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull code
+        uses: actions/chechout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Execute tests
+        run: npm run test
+      - name: Testing project
+        run: echo "Testing project..."
+  deploy:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull code
+        uses: actions/chechout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build
+      - name: Deploy project
+        run: echo "Deploying project..."
