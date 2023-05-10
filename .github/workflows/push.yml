@@ -13,9 +13,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Execute lint command
-        run: npm run lint
-      - name: Linting project
-        run: echo "Linting project..."
+        run: | 
+          echo "Linting project..."
+          npm run lint
   tests:
     needs: lint
     runs-on: ubuntu-latest
@@ -29,9 +29,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Execute tests
-        run: npm run test
-      - name: Testing project
-        run: echo "Testing project..."
+        run: | 
+          echo "Testing project..."
+          npm run test
   deploy:
     needs: tests
     runs-on: ubuntu-latest

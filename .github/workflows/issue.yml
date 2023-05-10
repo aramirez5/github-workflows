@@ -1,0 +1,20 @@
+name: Post issue
+on: 
+  issues:
+    types: [opened]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull code
+        uses: actions/checkout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Print issue details
+        run: | 
+          echo "Event details:"
+          echo "${{ toJSON(github) }}"
