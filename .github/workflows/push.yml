@@ -6,42 +6,26 @@ jobs:
     steps:
       - name: Pull code
         uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
       - name: Install dependencies
         run: npm install
       - name: Execute lint command
-        run: | 
-          echo "Linting project..."
-          npm run lint
+        run: npm run lint
   tests:
     needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Pull code
         uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
       - name: Install dependencies
         run: npm install
       - name: Execute tests
-        run: | 
-          echo "Testing project..."
-          npm run test
+        run: npm run test
   deploy:
     needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Pull code
         uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
       - name: Install dependencies
         run: npm install
       - name: Build project
