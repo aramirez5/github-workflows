@@ -1,7 +1,9 @@
 name: Post issue
+
 on: 
   issues:
     types: [opened]
+    
 jobs:
   issue:
     runs-on: ubuntu-latest

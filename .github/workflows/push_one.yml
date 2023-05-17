@@ -1,5 +1,7 @@
 name: Deploy project in one job
+
 on: push
+
 jobs:
   deploy:
     runs-on: ubuntu-latest

@@ -1,12 +1,21 @@
 name: Deploy project in three sequential jobs
+
 on: push
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Pull code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3  
+        with:
+          path: node_modules
+          key: deps-node-modules-$ {{ hashFiles('**/package-lock-json') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
       - name: Execute lint command
         run: | 
