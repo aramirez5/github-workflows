@@ -1,23 +1,19 @@
 name: Deploy project in three sequential jobs
 
-on: push
+on: 
+  push:
+    branches:
+      - master
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull code
+      - name: Checkout project
         uses: actions/checkout@v3
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3  
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
-      - name: Execute lint command
+      - name: Load & cache dependencies
+        uses: .github/actions
+      - name: Lint code
         run: | 
           echo "Linting project..."
           npm run lint
@@ -25,17 +21,10 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      - name: Pull code
+      - name: Checkout project
         uses: actions/checkout@v3
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3  
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
+      - name: Load & cache dependencies
+        uses: .github/actions
       - name: Execute tests
         run: | 
           echo "Testing project..."
@@ -44,17 +33,10 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     steps:
-      - name: Pull code
+      - name: Checkout project
         uses: actions/checkout@v3
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3  
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
+      - name: Load & cache dependencies
+        uses: .github/actions
       - name: Build project
         run: npm run build
       - name: Deploy project
