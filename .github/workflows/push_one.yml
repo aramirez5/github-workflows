@@ -6,11 +6,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull code
+      - name: Checkout project
         uses: actions/checkout@v3
       - name: Install dependencies
         run: npm install
-      - name: Execute lint command
+      - name: Lint code
         run: | 
           echo "Linting project..."
           npm run lint
